@@ -59,8 +59,19 @@ class MainActivity : AppCompatActivity() {
             studentSubjectRelations.forEach { dao.insertStudentSubjectCrossRef(it) }
 
             val schoolWithDirector = dao.getSchoolAndDirectorWithSchoolName("Kotlin School")
-
             val schoolWithStudents = dao.getSchoolWithStudents("Kotlin School")
+            val studentsOfSemester = dao.getStudentsOfSemester(2)
+            val studentsOfSubject = dao.getStudentsOfSubject("Dating for programmers")
+//            val studentSubjectSchoolOfSubject = dao.getStudentSubjectSchoolOfSubject("Avoiding depression")
+            val studentSubjectSchoolOfSubject2 = dao.getStudentSubjectSchoolOfSubject2("Avoiding depression")
+
+            println(schoolWithDirector)
+            println(schoolWithStudents)
+            println(studentsOfSemester)
+            println(studentsOfSubject)
+//            println(studentSubjectSchoolOfSubject)
+            println(studentSubjectSchoolOfSubject2)
+
         }
     }
 }

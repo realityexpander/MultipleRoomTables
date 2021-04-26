@@ -40,4 +40,22 @@ interface SchoolDao {
     @Transaction
     @Query("SELECT * FROM student WHERE studentName = :studentName")
     suspend fun getSubjectsOfStudent(studentName: String): List<StudentWithSubjects>
+
+    @Transaction
+    @Query("SELECT * FROM student WHERE semester = :semester")
+    suspend fun getStudentsOfSemester(semester: Int): List<Student>
+
+//    @Transaction
+//    @Query("SELECT student.studentName, subjectName, schoolName FROM StudentSubjectCrossRef \n" +
+//            "INNER JOIN Student ON student.studentName = StudentSubjectCrossRef.studentName\n" +
+//            "WHERE subjectName=:subjectName")
+//    suspend fun getStudentSubjectSchoolOfSubject(subjectName: String): List<StudentSubjectSchool>
+
+    @Transaction
+    @Query("SELECT student.studentName, student.semester,  student.schoolName, subjectName FROM StudentSubjectCrossRef \n" +
+            "INNER JOIN Student ON student.studentName = StudentSubjectCrossRef.studentName\n" +
+            "WHERE subjectName=:subjectName")
+    suspend fun getStudentSubjectSchoolOfSubject2(subjectName: String): List<StudentSubjectSchool>
+
+
 }
