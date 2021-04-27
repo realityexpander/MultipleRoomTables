@@ -25,6 +25,9 @@ interface SchoolDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStudentSubjectCrossRef(crossRef: StudentSubjectCrossRef)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStudentSubjectGradeCrossRef(crossRef: StudentSubjectGradeCrossRef)
+
     @Transaction
     @Query("SELECT * FROM school WHERE schoolName = :schoolName")
     suspend fun getSchoolAndDirectorWithSchoolName(schoolName: String): List<SchoolAndDirector>
@@ -38,6 +41,14 @@ interface SchoolDao {
     suspend fun getStudentsOfSubject(subjectName: String): List<SubjectWithStudents>
 
     @Transaction
+    @Query("SELECT * FROM studentsubjectgradecrossref WHERE studentName = :studentName AND subjectName = :subjectName")
+    suspend fun getGradeOfStudentSubject(studentName: String, subjectName: String): List<StudentSubjectGradeCrossRef>
+
+    @Transaction
+    @Query("SELECT * FROM studentsubjectgradecrossref WHERE studentName = :studentName")
+    suspend fun getGradesOfStudent(studentName: String): List<StudentSubjectGradeCrossRef>
+
+    @Transaction
     @Query("SELECT * FROM student WHERE studentName = :studentName")
     suspend fun getSubjectsOfStudent(studentName: String): List<StudentWithSubjects>
 
@@ -45,17 +56,17 @@ interface SchoolDao {
     @Query("SELECT * FROM student WHERE semester = :semester")
     suspend fun getStudentsOfSemester(semester: Int): List<Student>
 
-//    @Transaction
-//    @Query("SELECT student.studentName, subjectName, schoolName FROM StudentSubjectCrossRef \n" +
-//            "INNER JOIN Student ON student.studentName = StudentSubjectCrossRef.studentName\n" +
-//            "WHERE subjectName=:subjectName")
-//    suspend fun getStudentSubjectSchoolOfSubject(subjectName: String): List<StudentSubjectSchool>
-
     @Transaction
     @Query("SELECT student.studentName, student.semester,  student.schoolName, subjectName FROM StudentSubjectCrossRef \n" +
             "INNER JOIN Student ON student.studentName = StudentSubjectCrossRef.studentName\n" +
             "WHERE subjectName=:subjectName")
-    suspend fun getStudentSubjectSchoolOfSubject2(subjectName: String): List<StudentSubjectSchool>
+    suspend fun getStudentSubjectSchoolOfSubject(subjectName: String): List<StudentSubjectSchool>
+
+    @Transaction
+    @Query("SELECT grade, schoolName FROM studentSubjectGradeCrossRef\n" +
+            "INNER JOIN student ON studentSubjectGradeCrossRef.studentName = student.studentName\n" +
+            "WHERE student.schoolName = :schoolName")
+    suspend fun getGradesOfSchool(schoolName: String): List<GradeSchool>
 
 
 }

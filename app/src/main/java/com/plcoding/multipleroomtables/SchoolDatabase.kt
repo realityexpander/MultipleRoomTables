@@ -9,6 +9,7 @@ import com.plcoding.multipleroomtables.entities.School
 import com.plcoding.multipleroomtables.entities.Student
 import com.plcoding.multipleroomtables.entities.Subject
 import com.plcoding.multipleroomtables.entities.relations.StudentSubjectCrossRef
+import com.plcoding.multipleroomtables.entities.relations.StudentSubjectGradeCrossRef
 
 @Database(
     entities = [
@@ -16,7 +17,8 @@ import com.plcoding.multipleroomtables.entities.relations.StudentSubjectCrossRef
         Student::class,
         Director::class,
         Subject::class,
-        StudentSubjectCrossRef::class
+        StudentSubjectCrossRef::class,
+        StudentSubjectGradeCrossRef::class
     ],
     version = 1
 )
